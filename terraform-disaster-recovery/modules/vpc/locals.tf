@@ -1,21 +1,29 @@
 locals {
+
+  name_prefix = "${var.project_name}-${var.environment}"
+
   azs = var.azs
 
-  name_prefix = "${var.project_name}-vpc"
+  public_subnets = {
+    for idx, az in local.azs :
+    az => {
+      cidr = cidrsubnet(var.cidr_block, 4, idx)
+      az   = az
+    }
+  }
 
-  public_subnet_cidrs = [
-    for i in range(length(local.azs)) :
-    cidrsubnet(var.cidr_block, 4, i)
-  ]
-
-  private_subnet_cidrs = [
-    for i in range(length(local.azs)) :
-    cidrsubnet(var.cidr_block, 4, i + length(local.azs))
-  ]
+  private_subnets = {
+    for idx, az in local.azs :
+    az => {
+      cidr = cidrsubnet(var.cidr_block, 4, idx + length(local.azs))
+      az   = az
+    }
+  }
 
   common_tags = {
     Project     = var.project_name
     Environment = var.environment
-    ManagedBy   = "terraform"
+    ManagedBy   = "Terraform"
+    Module      = "VPC"
   }
 }
