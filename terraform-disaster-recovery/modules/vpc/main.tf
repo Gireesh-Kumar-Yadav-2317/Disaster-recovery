@@ -11,7 +11,7 @@ resource "aws_vpc" "this" {
     })
 
     lifecycle {
-      prevent_destroy = true
+      prevent_destroy = false
     }
   
 }

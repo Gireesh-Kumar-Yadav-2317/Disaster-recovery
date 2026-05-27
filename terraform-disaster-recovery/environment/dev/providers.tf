@@ -1,5 +1,8 @@
+
 provider "aws" {
-  region = var.aws_region
+
+  alias  = "primary"
+  region = var.primary_region
 
   default_tags {
     tags = {
@@ -9,3 +12,19 @@ provider "aws" {
     }
   }
 }
+
+
+provider "aws" {
+
+  alias  = "dr"
+  region = var.dr_region
+
+  default_tags {
+    tags = {
+      Project     = var.project_name
+      Environment = var.environment
+      ManagedBy   = "Terraform"
+    }
+  }
+}
+

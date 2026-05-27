@@ -17,3 +17,21 @@ variable "cidr_block" {
 variable "azs" {
   type = list(string)
 }
+
+
+variable "primary_region" {
+  type = string
+}
+
+variable "dr_region" {
+  type = string
+}
+
+
+variable "dr_cidr_block" {
+  type = string
+}
+
+variable "dr_azs" {
+  type = list(string)
+}
